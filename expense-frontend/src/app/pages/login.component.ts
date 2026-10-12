@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+
+// Existing Firebase user ko sign in karne ke liye login page component.
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -40,6 +42,7 @@ export class LoginComponent {
   loading = false;
   error = '';
 
+  // Form validate karke sign in karta hai aur successful login par expenses page kholta hai.
   async submit(): Promise<void> {
     if (!this.email || !this.password) {
       this.error = 'Email and password are required.';

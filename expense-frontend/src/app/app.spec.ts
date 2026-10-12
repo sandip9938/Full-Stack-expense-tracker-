@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { App } from './app';
 
+// Root component ke creation aur rendered content ke basic tests.
 describe('App', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({

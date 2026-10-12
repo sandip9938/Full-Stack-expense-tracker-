@@ -1,6 +1,7 @@
 import { getApp, getApps, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
+// Firebase Console se mili web app settings yahan configure hoti hain.
 const firebaseConfig = {
   apiKey: "AIzaSyDcX63iCe_5l_qFv19Noj6lnFYjNv38z38",
   authDomain: "expense-tracker-b0631.firebaseapp.com",
@@ -18,5 +19,6 @@ if (!firebaseConfig.apiKey || firebaseConfig.apiKey.includes("YOUR_")) {
   );
 }
 
+// Firebase app ko repeat initialization se bachakar Authentication export karta hai.
 export const firebaseApp = getApps().length ? getApp() : initializeApp(firebaseConfig);
 export const auth = getAuth(firebaseApp);

@@ -3,6 +3,7 @@ import { inject } from "@angular/core";
 import { from, switchMap } from "rxjs";
 import { AuthService } from "./services/auth.service";
 
+// Har HTTP request ke liye Firebase ID token lekar Authorization header jodta hai.
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService);
 

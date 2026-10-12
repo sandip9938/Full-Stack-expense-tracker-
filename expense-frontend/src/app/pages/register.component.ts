@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
+// Naya Firebase account banane ke liye registration page component.
 @Component({
   selector: 'app-register',
   standalone: true,
@@ -41,6 +42,7 @@ export class RegisterComponent {
   loading = false;
   error = '';
 
+  // Form validate karke account banata hai; successful signup par expenses page kholta hai.
   async submit(): Promise<void> {
     if (!this.email || !this.password) {
       this.error = 'Email and password are required.';

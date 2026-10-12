@@ -4,6 +4,7 @@ import { ExpensesComponent } from './pages/expenses.component';
 import { LoginComponent } from './pages/login.component';
 import { RegisterComponent } from './pages/register.component';
 
+// Public login/register aur login-protected expenses routes yahan define hain.
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },

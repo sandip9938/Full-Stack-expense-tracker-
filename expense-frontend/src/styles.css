@@ -1,4 +1,5 @@
 :root {
+  /* App ke common colors ko variables mein rakhte hain taaki styling consistent rahe. */
   --bg: #0b0f19;
   --card: #131a2a;
   --line: #26324d;
@@ -9,10 +10,12 @@
 }
 
 * {
+  /* Width aur padding ko element ke total size ke andar include karta hai. */
   box-sizing: border-box;
 }
 
 body {
+  /* Puri app ka default background, text color aur font set karta hai. */
   margin: 0;
   background: var(--bg);
   color: var(--text);
@@ -27,6 +30,7 @@ textarea {
 }
 
 .wrap {
+  /* Main content ko center karke readable width mein rakhta hai. */
   max-width: 900px;
   margin: 0 auto;
   padding: 24px 16px;
@@ -52,6 +56,7 @@ h1 {
 }
 
 .card {
+  /* Dashboard aur form sections ke liye reusable panel styling. */
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: 14px;
@@ -60,6 +65,7 @@ h1 {
 }
 
 .auth-card {
+  /* Login aur registration forms ko centered card ke roop mein dikhata hai. */
   max-width: 420px;
   margin: 12vh auto;
   background: var(--card);
@@ -84,6 +90,7 @@ h1 {
 }
 
 .total h2 {
+  /* Expense total ko prominent green color mein dikhata hai. */
   margin: 4px 0 0;
   font-size: 32px;
   color: #34d399;
@@ -104,6 +111,7 @@ h1 {
 input,
 select,
 textarea {
+  /* Form controls ko app ke dark theme ke saath match karta hai. */
   width: 100%;
   padding: 10px 12px;
   border-radius: 10px;
@@ -126,6 +134,7 @@ textarea {
 }
 
 .btn {
+  /* Primary action buttons ka shared style. */
   background: var(--accent);
   color: #fff;
   border: 0;
@@ -161,6 +170,7 @@ textarea {
 }
 
 table {
+  /* Expense list ko container ki poori width deta hai. */
   width: 100%;
   border-collapse: collapse;
 }

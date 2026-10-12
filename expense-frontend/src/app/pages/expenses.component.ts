@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Expense, ExpenseService } from '../services/expense.service';
 
+// Login user ke expenses dekhne aur add, edit, delete karne ka dashboard.
 @Component({
   selector: 'app-expenses',
   standalone: true,
@@ -105,10 +106,13 @@ export class ExpensesComponent implements OnInit {
     note: '',
   };
 
+  // Expense list ke amounts jodkar dashboard ka total calculate karta hai.
+
   ngOnInit(): void {
     this.load();
   }
 
+  // Backend se current user ke expenses load karta hai.
   load(): void {
     this.api.getAll().subscribe({
       next: (data) => this.expenses.set(data),
@@ -116,6 +120,7 @@ export class ExpensesComponent implements OnInit {
     });
   }
 
+  // Form data ke hisaab se naya expense save ya existing expense update karta hai.
   save(): void {
     const payload = {
       title: this.form.title,
@@ -143,6 +148,7 @@ export class ExpensesComponent implements OnInit {
     });
   }
 
+  // Chune hue expense ki values form mein daal kar edit mode shuru karta hai.
   edit(expense: Expense): void {
     this.editingId.set(expense.id ?? null);
     this.form = {
@@ -155,6 +161,7 @@ export class ExpensesComponent implements OnInit {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  // Edit mode clear karke form ko naye expense ke liye reset karta hai.
   reset(): void {
     this.editingId.set(null);
     this.form = {
@@ -167,6 +174,7 @@ export class ExpensesComponent implements OnInit {
     this.error.set('');
   }
 
+  // Confirmation ke baad selected expense delete karke list dobara load karta hai.
   remove(id: number): void {
     if (!confirm('Pakka delete karna hai?')) {
       return;
