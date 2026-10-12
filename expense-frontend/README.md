@@ -1,59 +1,67 @@
-# ExpenseFrontend
+# Expense Tracker Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.0.
+Angular frontend for the Expense Tracker. Firebase Authentication handles user accounts; authenticated expense data is read from and written to the NestJS backend.
 
-## Development server
+## Requirements
 
-To start a local development server, run:
+- Node.js and npm
+- The Expense Tracker backend running at `http://localhost:3000`
+- A Firebase project with Email/Password sign-in enabled
 
-```bash
-ng serve
+## Install and run
+
+From this directory:
+
+```powershell
+npm install
+npm start
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Open the URL printed by Angular CLI, usually `http://localhost:4200`. If that port is busy, Angular may select another available port; the backend allows local `localhost` and `127.0.0.1` origins.
 
-## Code scaffolding
+## Firebase configuration
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Set the Firebase Web App configuration in `src/app/firebase.config.ts` using the values from Firebase Console → **Project settings** → **Your apps**. Enable Email/Password at Firebase Console → **Authentication** → **Sign-in method**.
 
-```bash
-ng generate component component-name
+The frontend Firebase project must match the Firebase project used by the backend service account. Firebase web configuration is client-side; restrict the API key to the required APIs and approved web origins. Never commit Firebase Admin service-account credentials to this frontend project.
+
+## App flow
+
+1. `src/main.ts` starts the Angular app with providers from `src/app/app.config.ts`.
+2. `src/app/app.routes.ts` maps `/login`, `/register`, and `/expenses` to their page components.
+3. Login and registration pages call `src/app/services/auth.service.ts`, which uses Firebase Auth.
+4. `src/app/auth.guard.ts` checks the Firebase session before allowing access to `/expenses`.
+5. `src/app/pages/expenses.component.ts` displays expenses and handles add, edit, and delete actions.
+6. `src/app/services/expense.service.ts` sends expense requests to `http://localhost:3000/expenses`.
+7. `src/app/token.interceptor.ts` adds the Firebase ID token as a Bearer Authorization header to API requests.
+
+## Backend API
+
+The frontend expects the backend at `http://localhost:3000`. It calls:
+
+| Method | Endpoint | Purpose |
+| --- | --- | --- |
+| `GET` | `/expenses` | List the signed-in user's expenses |
+| `GET` | `/expenses/:id` | Read one expense |
+| `POST` | `/expenses` | Add an expense |
+| `PATCH` | `/expenses/:id` | Update an expense |
+| `DELETE` | `/expenses/:id` | Delete an expense |
+
+To use a different backend URL, update the `url` field in `src/app/services/expense.service.ts`. Configure the backend CORS origin to match the frontend URL.
+
+## Build and tests
+
+```powershell
+npm run build
+npm test
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+`npm run build` writes the production build to `dist/`.
 
-```bash
-ng generate --help
-```
+## Troubleshooting
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- **Firebase API key error:** Verify the web app config in `src/app/firebase.config.ts`.
+- **401 Unauthorized:** Sign in again and verify that frontend and backend use the same Firebase project.
+- **CORS error:** Ensure the backend allows the exact frontend origin and restart the backend after changing its configuration.
+- **Failed to fetch:** Confirm the backend is running at `http://localhost:3000` and inspect the browser Network tab for the failed API request.
+- **Expense not saved:** Check the API response in the browser Network tab and check the backend terminal and PostgreSQL connection.
